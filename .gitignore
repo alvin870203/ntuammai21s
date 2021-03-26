@@ -1,0 +1,3 @@
+# .gitignore for ntuammai21s/hw1
+hw1/data/*
+hw1/data.zip
