@@ -3,9 +3,9 @@ hw1/.vscode/*
 hw1/project/.vscode/*
 hw1/data/*
 hw1/data.zip
-hw1/project/data/*
-hw1/project/data-FACE/*
-hw1/project/test/*
+hw1/project/data/train/*
+hw1/project/data/test/*
 hw1/Angular-Penalty-Softmax-Losses-Pytorch
 hw1/FaceX-Zoo
 hw1/facenet
+hw1/project/det_face.py
