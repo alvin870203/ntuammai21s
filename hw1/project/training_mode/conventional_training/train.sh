@@ -4,7 +4,7 @@ python train.py \
     --train_file '/home/chihyuan/ntuammai21s/hw1/project/data/files/train_list.txt' \
     --backbone_type 'MobileFaceNet' \
     --backbone_conf_file '../backbone_conf.yaml' \
-    --head_type 'ArcFace' \
+    --head_type 'MagFace' \
     --head_conf_file '../head_conf.yaml' \
     --lr 0.1 \
     --out_dir 'out_dir' \
@@ -12,7 +12,7 @@ python train.py \
     --step '10, 13, 16' \
     --print_freq 200 \
     --save_freq 3000 \
-    --batch_size 512 \
+    --batch_size 128 \
     --momentum 0.9 \
     --log_dir 'log' \
     --tensorboardx_logdir 'mv-hrnet' \
