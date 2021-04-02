@@ -9,3 +9,4 @@ hw1/Angular-Penalty-Softmax-Losses-Pytorch
 hw1/FaceX-Zoo
 hw1/facenet
 hw1/project/det_face.py
+hw1/project/**/__pycache__/*

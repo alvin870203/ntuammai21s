@@ -30,7 +30,7 @@ def gen_train_list(data_root, train_file):
 
 
 if __name__ == '__main__':
-    data_root = './data/train/C'
+    data_root = './data/train/C_prep'
     # file to be generate.
     train_file = './data/files/train_list.txt'
     gen_train_list(data_root, train_file)
