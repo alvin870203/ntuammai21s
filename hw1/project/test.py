@@ -117,17 +117,23 @@ if __name__ == '__main__':
     #             accu_list.append((os.path.basename(model_path), mean, std))
     #     accu_list.sort(key = accu_key, reverse=True)
     # else:
-    model = model_loader.load_model('/home/chihyuan/ntuammai21s/hw1/project/training_mode/conventional_training/out_dir/Epoch_17.pt')
+    model = model_loader.load_model('/home/chihyuan/ntuammai21s/hw1/project/training_mode/conventional_training/out_dir/Epoch_199.pt')
     
     data_loader = DataLoader(myImageDataset('/home/chihyuan/ntuammai21s/hw1/project/data/train/C_prep', '/home/chihyuan/ntuammai21s/hw1/project/data/files/train_list.txt'), 
                              batch_size=128, shuffle=False, num_workers = 4)
     model.eval()
     image_name2feature = feature_extractor.extract_online(model, data_loader)
-    print(len(image_name2feature), len(image_name2feature['/home/chihyuan/ntuammai21s/hw1/project/data/train/C_prep/黃義交_5.jpg']))
+    print(len(image_name2feature), len(image_name2feature['/home/chihyuan/ntuammai21s/hw1/project/data/train/C_prep/陳玉珍_10.jpg']))
     print(np.linalg.norm(image_name2feature['/home/chihyuan/ntuammai21s/hw1/project/data/train/C_prep/黃義交_5.jpg']))
-    feat1 = image_name2feature['/home/chihyuan/ntuammai21s/hw1/project/data/train/C_prep/黃義交_17.jpg']
-    feat2 = image_name2feature['/home/chihyuan/ntuammai21s/hw1/project/data/train/C_prep/黃義交_13.jpg']
-    feat3 = image_name2feature['/home/chihyuan/ntuammai21s/hw1/project/data/train/C_prep/青木愛_13.jpg']
-    cur_score2 = np.dot(feat1, feat2)
-    cur_score3 = np.dot(feat1, feat3)
-    print(cur_score2, cur_score3)
+    feat1 = image_name2feature['/home/chihyuan/ntuammai21s/hw1/project/data/train/C_prep/陳玉珍_10.jpg']
+    # feat2 = image_name2feature['/home/chihyuan/ntuammai21s/hw1/project/data/train/C_prep/黃義交_13.jpg']
+    # feat3 = image_name2feature['/home/chihyuan/ntuammai21s/hw1/project/data/train/C_prep/青木愛_13.jpg']
+    cur_score = np.dot(feat1, feat1)
+    for key, value in image_name2feature.items():
+        if 0.5 < np.dot(feat1, value):
+            print(key, np.dot(feat1, value))
+
+    # print(cur_score)
+    # cur_score2 = np.dot(feat1, feat2)
+    # cur_score3 = np.dot(feat1, feat3)
+    # print(cur_score2, cur_score3)
