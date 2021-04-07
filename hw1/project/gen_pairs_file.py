@@ -15,7 +15,7 @@ def gen_pairs_file(data_root, labels_file, pairs_file):
     with open(pairs_file) as f:
         labels_list = [line.rstrip('\n') for line in f]
     for index, image_path in enumerate(image_list):
-        labels_idx = image_path.split('_')[2]
+        labels_idx = int(image_path.split('_')[2])
         line = image_path + ' ' + labels_list[labels_idx]
         pairs_file_buf.write(line + '\n')
 
