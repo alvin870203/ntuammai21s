@@ -1,7 +1,7 @@
 mkdir 'log'
 python train.py \
     --data_root '/home/chihyuan/ntuammai21s/hw1/project/data/train/C_prep' \
-    --train_file '/home/chihyuan/ntuammai21s/hw1/project/data/files/train_list.txt' \
+    --train_file '/home/chihyuan/ntuammai21s/hw1/project/data/files/train/train_list.txt' \
     --backbone_type 'MobileFaceNet' \
     --backbone_conf_file '../backbone_conf.yaml' \
     --head_type 'AM-Softmax' \
