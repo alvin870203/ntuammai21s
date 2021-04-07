@@ -10,12 +10,14 @@ def gen_pairs_file(data_root, labels_file, pairs_file):
     """
     pairs_file_buf = open(pairs_file, 'w')
     image_list = os.listdir(data_root)
-    #image_list.sort()
-    #labels_list = []
-    with open(pairs_file) as f:
+    image_list.sort(key= lambda x: int(x.split('_')[3].strip('.jpg')))
+    image_list.sort(key= lambda x: int(x.split('_')[2]))
+    with open(labels_file) as f:
         labels_list = [line.rstrip('\n') for line in f]
+    #print(labels_list)
     for index, image_path in enumerate(image_list):
         labels_idx = int(image_path.split('_')[2])
+        #print(image_path, labels_idx)
         line = image_path + ' ' + labels_list[labels_idx]
         pairs_file_buf.write(line + '\n')
 
