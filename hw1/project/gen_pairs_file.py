@@ -21,7 +21,7 @@ def gen_pairs_file(data_root, labels_file, pairs_file):
 
 
 if __name__ == '__main__':
-    data_root = './data/test/closed_set/test_piars'
+    data_root = './data/test/closed_set/test_pairs'
     labels_file = './data/test/closed_set/labels.txt'
     # file to be generate.
     pairs_file = './data/files/test/closed_set/pairs_closed.txt'
