@@ -66,7 +66,7 @@ if __name__ == '__main__':
         model = model_loader.load_model(args.model_path)
         mean, std = lfw_evaluator.test(model)
         accu_list = [(os.path.basename(args.model_path), mean, std)]
-    pretty_tabel = PrettyTable(["model_name", "mean accuracy", "standard error"])
+    pretty_tabel = PrettyTable(["model_name", "accuracy", "best threshold"])
     for accu_item in accu_list:
         pretty_tabel.add_row(accu_item)
     print(pretty_tabel)
