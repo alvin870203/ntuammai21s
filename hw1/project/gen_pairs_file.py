@@ -20,10 +20,11 @@ def gen_pairs_file(data_root, labels_file, pairs_file):
         #print(image_path, labels_idx)
         line = image_path + ' ' + labels_list[labels_idx]
         pairs_file_buf.write(line + '\n')
+    print("Number of lines: {}".format(len(image_list)))
 
 
 if __name__ == '__main__':
-    data_root = './data/test/closed_set/test_pairs'
+    data_root = './data/test/closed_set/test_pairs_crop'
     labels_file = './data/test/closed_set/labels.txt'
     # file to be generate.
     pairs_file = './data/files/test/closed_set/pairs_closed.txt'
