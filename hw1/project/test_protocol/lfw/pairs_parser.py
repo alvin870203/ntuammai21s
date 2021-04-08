@@ -85,6 +85,34 @@ class CPLFW_PairsParser(PairsParser):
             test_pair_list.extend(cur_negtive_pair_list)
         return test_pair_list
 
+class APD_PairsParser(PairsParser):
+    """The pairs parser for apd.
+    """
+    def parse_pairs(self):        
+        pair_list = []
+        pairs_file_buf = open(self.pairs_file)
+        line1 = pairs_file_buf.readline().strip()
+        while line1:
+            line2 = pairs_file_buf.readline().strip()
+            image_name1 = line1.split(' ')[0]
+            image_name2 = line2.split(' ')[0]
+            label = line1.split(' ')[1]
+            pair_list.append((image_name1, image_name2, int(label)))
+            line1 = pairs_file_buf.readline().strip()
+        # assert(len(pair_list) == 2000)
+        # test_pair_list = []
+        # positive_start = 0 # 0-2999
+        # negtive_start = 3000 # 3000 - 5999
+        # for set_idx in range(10):
+        #     positive_index = positive_start + 300 * set_idx
+        #     negtive_index = negtive_start + 300 * set_idx
+        #     cur_positive_pair_list = pair_list[positive_index : positive_index + 300]
+        #     cur_negtive_pair_list = pair_list[negtive_index : negtive_index + 300]
+        #     test_pair_list.extend(cur_positive_pair_list)
+        #     test_pair_list.extend(cur_negtive_pair_list)
+        # return test_pair_list
+        return pair_list
+
 class CALFW_PairsParser(PairsParser):
     """The pairs parser for calfw.
     """
@@ -153,6 +181,8 @@ class PairsParserFactory(object):
             pairs_parser =  LFW_PairsParser(self.pairs_file)
         elif self.test_set == 'CPLFW':
             pairs_parser = CPLFW_PairsParser(self.pairs_file)
+        elif self.test_set == 'APD':
+            pairs_parser = APD_PairsParser(self.pairs_file)
         elif self.test_set == 'CALFW':
             pairs_parser = CALFW_PairsParser(self.pairs_file)
         elif self.test_set == 'AgeDB30':

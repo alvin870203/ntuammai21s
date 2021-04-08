@@ -16,7 +16,7 @@ class LFWEvaluator(object):
         pair_list(list): the pair list given by PairsParser.
         feature_extractor(object): a feature extractor.
     """
-    def __init__(self, data_loader, pairs_parser_factory, feature_extractor):
+    def __init__(self, data_loader, pairs_parser_factory, feature_extractor, num_id_per_subset=500):
         """Init LFWEvaluator.
 
         Args:
@@ -29,6 +29,8 @@ class LFWEvaluator(object):
         pairs_parser = pairs_parser_factory.get_parser()
         self.pair_list = pairs_parser.parse_pairs()
         self.feature_extractor = feature_extractor
+        self.num_id_per_subset = num_id_per_subset # how many images per subset
+        self.num_subset = len(self.pair_list) // self.num_id_per_subset # how many subsets
 
     def test(self, model):
         image_name2feature = self.feature_extractor.extract_online(model, self.data_loader)
@@ -47,11 +49,11 @@ class LFWEvaluator(object):
             mean: estimated mean accuracy.
             std: standard error of the mean.
         """
-        subsets_score_list = np.zeros((10, 600), dtype = np.float32)
-        subsets_label_list = np.zeros((10, 600), dtype = np.int8)
+        subsets_score_list = np.zeros((self.num_subset, self.num_id_per_subset), dtype = np.float32)
+        subsets_label_list = np.zeros((self.num_subset, self.num_id_per_subset), dtype = np.int8)
         for index, cur_pair in enumerate(test_pair_list):
-            cur_subset = index // 600
-            cur_id = index % 600
+            cur_subset = index // self.num_id_per_subset
+            cur_id = index % self.num_id_per_subset
             image_name1 = cur_pair[0]
             image_name2 = cur_pair[1]
             label = cur_pair[2]
@@ -64,9 +66,9 @@ class LFWEvaluator(object):
             cur_score = np.dot(feat1, feat2)
             subsets_score_list[cur_subset][cur_id] = cur_score
 
-        subset_train = np.array([True] * 10)
+        subset_train = np.array([True] * self.num_subset)
         accu_list = []
-        for subset_idx in range(10):
+        for subset_idx in range(self.num_subset):
             test_score_list = subsets_score_list[subset_idx]
             test_label_list = subsets_label_list[subset_idx]
             subset_train[subset_idx] = False
@@ -78,9 +80,9 @@ class LFWEvaluator(object):
             negtive_score_list = test_score_list[test_label_list == 0]
             true_pos_pairs = np.sum(positive_score_list > best_thres)
             true_neg_pairs = np.sum(negtive_score_list < best_thres)
-            accu_list.append((true_pos_pairs + true_neg_pairs) / 600)
+            accu_list.append((true_pos_pairs + true_neg_pairs) / self.num_id_per_subset)
         mean = np.mean(accu_list)
-        std = np.std(accu_list, ddof=1) / np.sqrt(10) #ddof=1, division 9.
+        std = np.std(accu_list, ddof=1) / np.sqrt(self.num_subset) #ddof=1, division 9.
         return mean, std
 
     def getThreshold(self, score_list, label_list, num_thresholds=1000):
