@@ -28,7 +28,7 @@ import argparse
 with open('config/model_conf.yaml') as f:
     model_conf = yaml.load(f)
 
-def crop_apd(apd_root, target_folder, start_idx, end_idx):
+def crop_apd(apd_root, target_folder):#, start_idx, end_idx):
     # common setting for all models, need not modify.
     model_path = 'models'
 
@@ -67,7 +67,7 @@ def crop_apd(apd_root, target_folder, start_idx, end_idx):
     file_list = os.listdir(apd_root)
     file_list.sort()
     idx = 0
-    for cur_file in file_list[start_idx:end_idx]:
+    for cur_file in file_list:#[start_idx:end_idx]:
         if cur_file.endswith('.jpg'):
             idx += 1
             cur_file_path = os.path.join(apd_root, cur_file)
@@ -90,12 +90,13 @@ def crop_apd(apd_root, target_folder, start_idx, end_idx):
             cv2.imwrite(target_path, cur_cropped_image)
         
 if __name__ == '__main__':
-    conf = argparse.ArgumentParser(description='lfw test protocal.')
-    conf.add_argument("--batch_idx", type = int, 
-                      help = "0, 1, ..., 9,")
-    args = conf.parse_args()
-    apd_root = '/home/chihyuan/ntuammai21s/hw1/project/data/test/closed_set/test_pairs'
-    target_folder = '/home/chihyuan/ntuammai21s/hw1/project/data/test/closed_set/test_pairs_crop'
+    # conf = argparse.ArgumentParser(description='lfw test protocal.')
+    # conf.add_argument("--batch_idx", type = int, 
+    #                   help = "0, 1, ..., 9,")
+    # args = conf.parse_args()
+    apd_root = '/home/chihyuan/ntuammai21s/hw1/project/data/test/open_set/test_pairs'#'/home/chihyuan/ntuammai21s/hw1/project/data/test/closed_set/test_pairs'
+    target_folder = '/home/chihyuan/ntuammai21s/hw1/project/data/test/open_set/test_pairs_crop'#'/home/chihyuan/ntuammai21s/hw1/project/data/test/closed_set/test_pairs_crop'
     # for i in range(9):
-    i = args.batch_idx
-    crop_apd(apd_root, target_folder, 200*i, 200*(i+1))
+    # i = args.batch_idx
+    # crop_apd(apd_root, target_folder, 200*i, 200*(i+1))
+    crop_apd(apd_root, target_folder)

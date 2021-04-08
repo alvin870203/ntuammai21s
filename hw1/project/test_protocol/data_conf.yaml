@@ -1,7 +1,10 @@
 APD:
-    pairs_file_path: /home/chihyuan/ntuammai21s/hw1/project/data/files/test/closed_set/pairs_closed.txt
-    cropped_face_folder: /home/chihyuan/ntuammai21s/hw1/project/data/test/closed_set/test_pairs_crop
-    image_list_file_path: /home/chihyuan/ntuammai21s/hw1/project/data/files/test/closed_set/img_list_closed.txt
+    # pairs_file_path: /home/chihyuan/ntuammai21s/hw1/project/data/files/test/closed_set/pairs_closed.txt
+    # cropped_face_folder: /home/chihyuan/ntuammai21s/hw1/project/data/test/closed_set/test_pairs_crop
+    # image_list_file_path: /home/chihyuan/ntuammai21s/hw1/project/data/files/test/closed_set/img_list_closed.txt
+    pairs_file_path: /home/chihyuan/ntuammai21s/hw1/project/data/files/test/open_set/pairs_open.txt
+    cropped_face_folder: /home/chihyuan/ntuammai21s/hw1/project/data/test/open_set/test_pairs_crop
+    image_list_file_path: /home/chihyuan/ntuammai21s/hw1/project/data/files/test/open_set/img_list_open.txt
 
 LFW:
     pairs_file_path: /export2/wangjun492/face_database/facex-zoo/private_file/test_data/lfw/pairs.txt

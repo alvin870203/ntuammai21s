@@ -16,7 +16,7 @@ def gen_image_list(data_root, image_list_file):
 
 
 if __name__ == '__main__':
-    data_root = './data/test/closed_set/test_pairs_crop'
+    data_root = './data/test/open_set/test_pairs_crop'#'./data/test/closed_set/test_pairs_crop'
     # file to be generate.
-    image_list_file = './data/files/test/closed_set/img_list_closed.txt'
+    image_list_file = './data/files/test/open_set/img_list_open.txt'#'./data/files/test/closed_set/img_list_closed.txt'
     gen_image_list(data_root, image_list_file)
