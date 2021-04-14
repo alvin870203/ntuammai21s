@@ -127,45 +127,46 @@ def train(conf):
                         criterion, epoch, loss_meter, conf)
         lr_schedule.step()                        
 
-if __name__ == '__main__':
-    conf = argparse.ArgumentParser(description='traditional_training for face recognition.')
-    conf.add_argument("--data_root", type = str, 
-                      help = "The root folder of training set.")
-    conf.add_argument("--train_file", type = str,  
-                      help = "The training file path.")
-    conf.add_argument("--backbone_type", type = str, 
-                      help = "Mobilefacenets, Resnet.")
-    conf.add_argument("--backbone_conf_file", type = str, 
-                      help = "the path of backbone_conf.yaml.")
-    conf.add_argument("--head_type", type = str, 
-                      help = "mv-softmax, arcface, npc-face.")
-    conf.add_argument("--head_conf_file", type = str, 
-                      help = "the path of head_conf.yaml.")
-    conf.add_argument('--lr', type = float, default = 0.1, 
-                      help='The initial learning rate.')
-    conf.add_argument("--out_dir", type = str, 
-                      help = "The folder to save models.")
-    conf.add_argument('--epoches', type = int, default = 9, 
-                      help = 'The training epoches.')
-    conf.add_argument('--step', type = str, default = '2,5,7', 
-                      help = 'Step for lr.')
-    conf.add_argument('--print_freq', type = int, default = 10, 
-                      help = 'The print frequency for training state.')
-    conf.add_argument('--save_freq', type = int, default = 10, 
-                      help = 'The save frequency for training state.')
-    conf.add_argument('--batch_size', type = int, default = 128, 
-                      help='The training batch size over all gpus.')
-    conf.add_argument('--momentum', type = float, default = 0.9, 
-                      help = 'The momentum for sgd.')
-    conf.add_argument('--log_dir', type = str, default = 'log', 
-                      help = 'The directory to save log.log')
-    conf.add_argument('--tensorboardx_logdir', type = str, 
-                      help = 'The directory to save tensorboardx logs')
-    conf.add_argument('--pretrain_model', type = str, default = 'mv_epoch_8.pt', 
-                      help = 'The path of pretrained model')
-    conf.add_argument('--resume', '-r', action = 'store_true', default = False, 
-                      help = 'Whether to resume from a checkpoint.')
-    args = conf.parse_args()
+#if __name__ == '__main__':
+def train_main(args):
+    # conf = argparse.ArgumentParser(description='traditional_training for face recognition.')
+    # conf.add_argument("--data_root", type = str, 
+    #                   help = "The root folder of training set.")
+    # conf.add_argument("--train_file", type = str,  
+    #                   help = "The training file path.")
+    # conf.add_argument("--backbone_type", type = str, 
+    #                   help = "Mobilefacenets, Resnet.")
+    # conf.add_argument("--backbone_conf_file", type = str, 
+    #                   help = "the path of backbone_conf.yaml.")
+    # conf.add_argument("--head_type", type = str, 
+    #                   help = "mv-softmax, arcface, npc-face.")
+    # conf.add_argument("--head_conf_file", type = str, 
+    #                   help = "the path of head_conf.yaml.")
+    # conf.add_argument('--lr', type = float, default = 0.1, 
+    #                   help='The initial learning rate.')
+    # conf.add_argument("--out_dir", type = str, 
+    #                   help = "The folder to save models.")
+    # conf.add_argument('--epoches', type = int, default = 9, 
+    #                   help = 'The training epoches.')
+    # conf.add_argument('--step', type = str, default = '2,5,7', 
+    #                   help = 'Step for lr.')
+    # conf.add_argument('--print_freq', type = int, default = 10, 
+    #                   help = 'The print frequency for training state.')
+    # conf.add_argument('--save_freq', type = int, default = 10, 
+    #                   help = 'The save frequency for training state.')
+    # conf.add_argument('--batch_size', type = int, default = 128, 
+    #                   help='The training batch size over all gpus.')
+    # conf.add_argument('--momentum', type = float, default = 0.9, 
+    #                   help = 'The momentum for sgd.')
+    # conf.add_argument('--log_dir', type = str, default = 'log', 
+    #                   help = 'The directory to save log.log')
+    # conf.add_argument('--tensorboardx_logdir', type = str, 
+    #                   help = 'The directory to save tensorboardx logs')
+    # conf.add_argument('--pretrain_model', type = str, default = 'mv_epoch_8.pt', 
+    #                   help = 'The path of pretrained model')
+    # conf.add_argument('--resume', '-r', action = 'store_true', default = False, 
+    #                   help = 'Whether to resume from a checkpoint.')
+    # args = conf.parse_args()
     args.milestones = [int(num) for num in args.step.split(',')]
     if not os.path.exists(args.out_dir):
         os.makedirs(args.out_dir)

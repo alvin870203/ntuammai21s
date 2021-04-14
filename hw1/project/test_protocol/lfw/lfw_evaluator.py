@@ -16,7 +16,7 @@ class LFWEvaluator(object):
         pair_list(list): the pair list given by PairsParser.
         feature_extractor(object): a feature extractor.
     """
-    def __init__(self, data_loader, pairs_parser_factory, feature_extractor, num_pair_per_subset=20):
+    def __init__(self, data_loader, pairs_parser_factory, feature_extractor, num_pair_per_subset=20, args_mode=''):
         """Init LFWEvaluator.
 
         Args:
@@ -31,8 +31,11 @@ class LFWEvaluator(object):
         self.feature_extractor = feature_extractor
         self.num_pair_per_subset = num_pair_per_subset # how many images per subset
         self.num_subset = len(self.pair_list) // self.num_pair_per_subset # how many subsets
+        self.args_mode = args_mode
+        self.result_or_not = ''
 
-    def test(self, model):
+    def test(self, model, result_or_not):
+        self.result_or_not = result_or_not
         image_name2feature = self.feature_extractor.extract_online(model, self.data_loader)
         mean, std = self.test_one_model(self.pair_list, image_name2feature)
         return mean, std
@@ -70,7 +73,7 @@ class LFWEvaluator(object):
             # subsets_score_list[cur_subset][cur_id] = cur_score
             subsets_score_list[index] = cur_score
 
-        subset_train = np.array([True] * self.num_subset)
+        # subset_train = np.array([True] * self.num_subset)
         accu_list = []
         # for subset_idx in range(self.num_subset):
         #     test_score_list = subsets_score_list[subset_idx]
@@ -101,6 +104,17 @@ class LFWEvaluator(object):
         #########
         # mean = np.mean(accu_list)
         # std = np.std(accu_list, ddof=1) / np.sqrt(self.num_subset) #ddof=1, division 9.
+
+        # store predicted result
+        print(self.result_or_not)
+        if self.result_or_not == 'record result':
+            result_list_file_buf = open('./result/result_' + self.args_mode + '.txt', 'w')
+            for index, cur_similarity in enumerate(subsets_score_list):
+                if (cur_similarity > best_thres):
+                    result_list_file_buf.write('1\n')
+                else:
+                    result_list_file_buf.write('0\n')
+
         return mean, std
 
     def getThreshold(self, score_list, label_list, num_thresholds=1000):

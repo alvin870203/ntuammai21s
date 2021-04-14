@@ -86,7 +86,7 @@ class CPLFW_PairsParser(PairsParser):
         return test_pair_list
 
 class APD_PairsParser(PairsParser):
-    """The pairs parser for apd.
+    """The pairs parser for apd and open.
     """
     def parse_pairs(self):        
         pair_list = []
@@ -181,7 +181,7 @@ class PairsParserFactory(object):
             pairs_parser =  LFW_PairsParser(self.pairs_file)
         elif self.test_set == 'CPLFW':
             pairs_parser = CPLFW_PairsParser(self.pairs_file)
-        elif self.test_set == 'APD':
+        elif self.test_set == 'APD' or self.test_set == 'OPEN':
             pairs_parser = APD_PairsParser(self.pairs_file)
         elif self.test_set == 'CALFW':
             pairs_parser = CALFW_PairsParser(self.pairs_file)

@@ -8,6 +8,7 @@ import os
 import sys
 import argparse
 import yaml
+sys.path.append('./test_protocol')
 from prettytable import PrettyTable
 from torch.utils.data import DataLoader
 from lfw.pairs_parser import PairsParserFactory
@@ -21,21 +22,21 @@ from backbone.backbone_def import BackboneFactory
 def accu_key(elem):
     return elem[1]
 
-if __name__ == '__main__':
-    conf = argparse.ArgumentParser(description='lfw test protocal.')
-    conf.add_argument("--test_set", type = str, 
-                      help = "lfw, cplfw, calfw, agedb, rfw_African, \
-                      rfw_Asian, rfw_Caucasian, rfw_Indian.")
-    conf.add_argument("--data_conf_file", type = str, 
-                      help = "the path of data_conf.yaml.")
-    conf.add_argument("--backbone_type", type = str, 
-                      help = "Resnet, Mobilefacenets..")
-    conf.add_argument("--backbone_conf_file", type = str, 
-                      help = "The path of backbone_conf.yaml.")
-    conf.add_argument('--batch_size', type = int, default = 1024)
-    conf.add_argument('--model_path', type = str, default = 'mv_epoch_8.pt', 
-                      help = 'The path of model or the directory which some models in.')
-    args = conf.parse_args()
+def test_main(args):
+    # conf = argparse.ArgumentParser(description='lfw test protocal.')
+    # conf.add_argument("--test_set", type = str, 
+    #                   help = "lfw, cplfw, calfw, agedb, rfw_African, \
+    #                   rfw_Asian, rfw_Caucasian, rfw_Indian.")
+    # conf.add_argument("--data_conf_file", type = str, 
+    #                   help = "the path of data_conf.yaml.")
+    # conf.add_argument("--backbone_type", type = str, 
+    #                   help = "Resnet, Mobilefacenets..")
+    # conf.add_argument("--backbone_conf_file", type = str, 
+    #                   help = "The path of backbone_conf.yaml.")
+    # conf.add_argument('--batch_size', type = int, default = 1024)
+    # conf.add_argument('--model_path', type = str, default = 'mv_epoch_8.pt', 
+    #                   help = 'The path of model or the directory which some models in.')
+    # args = conf.parse_args()
     # parse config.
     with open(args.data_conf_file) as f:
         data_conf = yaml.load(f)[args.test_set]
@@ -51,7 +52,7 @@ if __name__ == '__main__':
     backbone_factory = BackboneFactory(args.backbone_type, args.backbone_conf_file)
     model_loader = ModelLoader(backbone_factory)
     feature_extractor = CommonExtractor('cuda:0')
-    lfw_evaluator = LFWEvaluator(data_loader, pairs_parser_factory, feature_extractor)
+    lfw_evaluator = LFWEvaluator(data_loader, pairs_parser_factory, feature_extractor, args_mode=args.mode)
     if os.path.isdir(args.model_path):
         accu_list = []
         model_name_list = os.listdir(args.model_path)
@@ -59,12 +60,12 @@ if __name__ == '__main__':
             if model_name.endswith('.pt'):
                 model_path = os.path.join(args.model_path, model_name)
                 model = model_loader.load_model(model_path)
-                mean, std = lfw_evaluator.test(model)
+                mean, std = lfw_evaluator.test(model, 'without result')
                 accu_list.append((os.path.basename(model_path), mean, std))
         accu_list.sort(key = accu_key, reverse=True)
     else:
         model = model_loader.load_model(args.model_path)
-        mean, std = lfw_evaluator.test(model)
+        mean, std = lfw_evaluator.test(model, 'record result')
         accu_list = [(os.path.basename(args.model_path), mean, std)]
     pretty_tabel = PrettyTable(["model_name", "accuracy", "best threshold"])
     for accu_item in accu_list:
