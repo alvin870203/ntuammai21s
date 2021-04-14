@@ -10,6 +10,7 @@ sys.path.append('../../')
 from head.AdaCos import AdaCos
 from head.AdaM_Softmax import Adam_Softmax
 from head.AM_Softmax import AM_Softmax
+from head.My_Loss import My_Loss
 from head.ArcFace import ArcFace
 from head.CircleLoss import CircleLoss
 from head.CurricularFace import CurricularFace
@@ -50,6 +51,12 @@ class HeadFactory:
             margin = self.head_param['margin'] # cos_theta - margin
             scale = self.head_param['scale'] # the scaling factor for cosine values.
             head = AM_Softmax(feat_dim, num_class, margin, scale)
+        elif self.head_type == 'My_Loss':
+            feat_dim = self.head_param['feat_dim'] # dimension of the output features, e.g. 512 
+            num_class = self.head_param['num_class'] # number of classes in the training set.
+            margin = self.head_param['margin'] # cos_theta - margin
+            scale = self.head_param['scale'] # the scaling factor for cosine values.
+            head = My_Loss(feat_dim, num_class, margin, scale)
         elif self.head_type == 'ArcFace':
             feat_dim = self.head_param['feat_dim'] # dimension of the output features, e.g. 512 
             num_class = self.head_param['num_class'] # number of classes in the training set.

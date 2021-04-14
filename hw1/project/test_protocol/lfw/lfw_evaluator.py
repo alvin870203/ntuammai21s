@@ -106,7 +106,7 @@ class LFWEvaluator(object):
         # std = np.std(accu_list, ddof=1) / np.sqrt(self.num_subset) #ddof=1, division 9.
 
         # store predicted result
-        print(self.result_or_not)
+        # print(self.result_or_not)
         if self.result_or_not == 'record result':
             result_list_file_buf = open('./result/result_' + self.args_mode + '.txt', 'w')
             for index, cur_similarity in enumerate(subsets_score_list):

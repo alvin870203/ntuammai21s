@@ -6,6 +6,10 @@ import os
 import argparse
 from training_mode.conventional_training.train import train_main
 from test_protocol.test_lfw import test_main
+from prep_face import prep_train_data
+from gen_train_list import gen_train_list
+from gen_image_list import gen_image_list
+from gen_pairs_file import gen_pairs_file
 
 if __name__ == '__main__':
     conf = argparse.ArgumentParser(description='main code for face recognition project.')
@@ -20,13 +24,13 @@ if __name__ == '__main__':
     ### use default value ###
     conf.add_argument("--data_conf_file", type = str, default='./test_protocol/data_conf.yaml',
                       help = "the path of data_conf.yaml.")
-    conf.add_argument('--model_path', type = str, default = './training_mode/conventional_training/out_dir/Epoch_9.pt', 
+    conf.add_argument('--model_path', type = str, default = './training_mode/conventional_training/out_dir/Epoch_184.pt', 
                       help = 'The path of model or the directory which some models in.')
 
     ### use default value ###
     conf.add_argument("--data_root", type = str, default='./data/train/C_prep', 
                       help = "The root folder of training set.")
-    conf.add_argument("--train_file", type = str, default='./data/files/train/train_list.txt', 
+    conf.add_argument("--train_file", type = str, default='./data/files/train/train_list_unsupervised.txt', 
                       help = "The training file path.")
     conf.add_argument("--backbone_type", type = str, default='MobileFaceNet', 
                       help = "Mobilefacenets, Resnet.")
@@ -61,10 +65,16 @@ if __name__ == '__main__':
     ######
     args = conf.parse_args()
     if args.mode == 'train':
+        prep_train_data('./data/train/C', './data/train/C_prep')
+        gen_train_list('./data/train/C_prep', './data/files/train/train_list_unsupervised.txt', './data/test/open_set/unlabeled_data_prep')
         train_main(args)
     if args.mode == 'closed':
+        gen_image_list('./data/test/closed_set/test_pairs_crop', './data/files/test/closed_set/img_list_closed.txt')
+        gen_pairs_file('./data/test/closed_set/test_pairs_crop', './data/test/closed_set/labels.txt', './data/files/test/closed_set/pairs_closed.txt')
         args.test_set = 'APD'
         test_main(args)
     if args.mode == 'open':
+        gen_image_list('./data/test/open_set/test_pairs_crop', './data/files/test/open_set/img_list_open.txt')
+        gen_pairs_file('./data/test/open_set/test_pairs_crop', './data/test/open_set/labels.txt', './data/files/test/open_set/pairs_open.txt')
         args.test_set = 'OPEN'
         test_main(args)

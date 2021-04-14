@@ -10,6 +10,12 @@ AdaM-Softmax:
 
 AM-Softmax:
     feat_dim: 512
+    num_class: 2685
+    margin: 0.35
+    scale: 32
+
+My_Loss:
+    feat_dim: 512
     num_class: 685
     margin: 0.35
     scale: 32

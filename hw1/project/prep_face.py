@@ -35,6 +35,6 @@ def prep_train_data(org_path, tgt_path):
         cv2.imwrite(osp.join(tgt_path, image_file), img)
 
 if __name__ == '__main__':
-    org_path = './data/train/C'
-    tgt_path = './data/train/C_prep'
+    org_path = './data/test/open_set/unlabeled_data'
+    tgt_path = './data/test/open_set/unlabeled_data_prep'
     prep_train_data(org_path, tgt_path)
