@@ -1,0 +1,12 @@
+丁午壽_76.jpg 0
+丁午壽_80.jpg 0
+丁午壽_86.jpg 0
+丁午壽_90.jpg 0
+丁守中_1.jpg 1
+丁守中_3.jpg 1
+丁守中_4.jpg 1
+丁守中_6.jpg 1
+../../data_test/open_set/unlabeled_data_prep/0.jpg 2
+../../data_test/open_set/unlabeled_data_prep/1.jpg 3
+../../data_test/open_set/unlabeled_data_prep/3.jpg 4
+../../data_test/open_set/unlabeled_data_prep/2.jpg 5

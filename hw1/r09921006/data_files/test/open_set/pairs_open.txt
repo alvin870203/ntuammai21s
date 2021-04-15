@@ -1,0 +1,4 @@
+test_pair_0_1.jpg 0
+test_pair_0_2.jpg 0
+test_pair_1_1.jpg 1
+test_pair_1_2.jpg 1
