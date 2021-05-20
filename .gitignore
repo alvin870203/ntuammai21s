@@ -1,3 +1,6 @@
+# ignore .vscode
+**/.vscode/
+
 # .gitignore for ntuammai21s/hw1
 hw1/.vscode/*
 hw1/project/.vscode/*
@@ -10,3 +13,6 @@ hw1/FaceX-Zoo
 hw1/facenet
 hw1/project/det_face.py
 hw1/project/**/__pycache__/*
+
+# .gitignore for ntuammai21s/final
+
