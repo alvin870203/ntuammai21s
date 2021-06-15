@@ -17,6 +17,8 @@ from methods.protonet import ProtoNet
 from io_utils import model_dict, parse_args, get_resume_file  
 from datasets import miniImageNet_few_shot, cifar100_few_shot
 
+from methods.mynet import MyNet
+
 def train(base_loader, val_loader, model, optimization, start_epoch, stop_epoch, params):    
     if optimization == 'Adam':
         optimizer = torch.optim.Adam(model.parameters())
@@ -71,7 +73,7 @@ if __name__=='__main__':
 
         model           = BaselineTrain( model_dict[params.model], params.num_classes)
 
-    elif params.method in ['protonet']:
+    elif params.method in ['protonet', 'mynet']:
         n_query = max(1, int(16* params.test_n_way/params.train_n_way)) #if test_n_way is smaller than train_n_way, reduce n_query to keep batch size small
         train_few_shot_params    = dict(n_way = params.train_n_way, n_support = params.n_shot) 
         test_few_shot_params     = dict(n_way = params.test_n_way, n_support = params.n_shot) 
@@ -97,6 +99,10 @@ if __name__=='__main__':
 
         if params.method == 'protonet':
             model           = ProtoNet( model_dict[params.model], **train_few_shot_params )
+        
+        if params.method == 'mynet':
+            model           = MyNet( model_dict[params.model], **train_few_shot_params )
+
     else:
        raise ValueError('Unknown method')
 

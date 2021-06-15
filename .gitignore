@@ -1,5 +1,6 @@
-# ignore .vscode
+# ignore common
 **/.vscode/
+**/__pycache__/*
 
 # .gitignore for ntuammai21s/hw1
 hw1/.vscode/*
