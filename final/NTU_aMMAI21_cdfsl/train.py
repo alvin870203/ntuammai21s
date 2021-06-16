@@ -102,6 +102,10 @@ if __name__=='__main__':
         
         if params.method == 'mynet':
             model           = MyNet( model_dict[params.model], **train_few_shot_params )
+            tmp = torch.load('logs/checkpoints/single/ResNet10_mynet_aug_5way_5shot_0615v1/best_model.tar')
+            state = tmp['state']
+            model.load_state_dict(state)
+            model.cuda()
 
     else:
        raise ValueError('Unknown method')

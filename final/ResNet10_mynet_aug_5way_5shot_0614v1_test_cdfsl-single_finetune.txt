@@ -1,0 +1,72 @@
+/home/chihyuan/anaconda3/envs/ntuammai21shw1/lib/python3.6/site-packages/torchvision/transforms/transforms.py:280: UserWarning: The use of the transforms.Scale transform is deprecated, please use transforms.Resize instead.
+  "please use transforms.Resize instead.")
+Loading CropDisease
+504
+497
+220
+1316
+1202
+842
+684
+411
+954
+788
+930
+944
+1107
+861
+339
+4406
+1838
+288
+798
+1183
+800
+800
+122
+297
+4072
+1468
+888
+365
+1702
+800
+1528
+762
+1417
+1341
+1124
+4286
+299
+1273
+Loading EuroSAT
+3000
+3000
+3000
+2500
+2500
+2000
+2500
+3000
+2500
+3000
+Loading ISIC
+1113
+6705
+514
+327
+1099
+115
+142
+fine-tune:  True
+n_pseudo:  100
+CropDisease
+Traceback (most recent call last):
+  File "meta_test_few_shot_models.py", line 181, in <module>
+    meta_test(novel_loader, n_query = 15, task=task, finetune=finetune, n_pseudo=n_pseudo, **few_shot_params)
+  File "meta_test_few_shot_models.py", line 58, in meta_test
+    pretrained_model.load_state_dict(state)
+  File "/home/chihyuan/anaconda3/envs/ntuammai21shw1/lib/python3.6/site-packages/torch/nn/modules/module.py", line 1052, in load_state_dict
+    self.__class__.__name__, "\n\t".join(error_msgs)))
+RuntimeError: Error(s) in loading state_dict for MyNet:
+	Missing key(s) in state_dict: "metric_loss_fn.W". 
