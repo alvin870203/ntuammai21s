@@ -22,6 +22,8 @@ from methods.mynet import MyNet
 def train(base_loader, val_loader, model, optimization, start_epoch, stop_epoch, params):    
     if optimization == 'Adam':
         optimizer = torch.optim.Adam(model.parameters())
+    elif optimization == 'SGD':
+        optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.9, dampening=0.9, weight_decay=0.001)
     else:
        raise ValueError('Unknown optimization, please define by yourself')     
 
@@ -53,6 +55,7 @@ if __name__=='__main__':
 
     image_size = 224
     optimization = 'Adam'
+    # optimization = 'SGD'
 
     base_loaders = []
     val_loaders = []
@@ -102,10 +105,10 @@ if __name__=='__main__':
         
         if params.method == 'mynet':
             model           = MyNet( model_dict[params.model], **train_few_shot_params )
-            tmp = torch.load('logs/checkpoints/single/ResNet10_mynet_aug_5way_5shot_0615v1/best_model.tar')
-            state = tmp['state']
-            model.load_state_dict(state)
-            model.cuda()
+            # tmp = torch.load('logs/checkpoints/single/ResNet10_mynet_aug_5way_5shot_0615v1/best_model.tar')
+            # state = tmp['state']
+            # model.load_state_dict(state)
+            # model.cuda()
 
     else:
        raise ValueError('Unknown method')

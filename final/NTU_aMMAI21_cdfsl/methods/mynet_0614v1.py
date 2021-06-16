@@ -13,10 +13,11 @@ import utils
 import itertools
 
 class MyNet(MetaTemplate):
-    def __init__(self, model_func,  n_way, n_support):
+    def __init__(self, model_func,  n_way, n_support, use_proto_loss=True):
         super(MyNet, self).__init__( model_func,  n_way, n_support)
         self.loss_fn  = nn.CrossEntropyLoss()
         self.z_proto = None
+        self.use_proto_loss = use_proto_loss
 
 
     def set_forward(self,x,is_feature = False):
@@ -62,7 +63,10 @@ class MyNet(MetaTemplate):
         #     # print(score.size())
         # scores = torch.clamp(scores, min=0.0)
         # print(f'classifier loss: {self.loss_fn(scores, y_query)}; proto loss: {proto_loss}')
-        loss = self.loss_fn(scores, y_query) + proto_loss_lambda * proto_loss
+        if self.use_proto_loss:
+            loss = self.loss_fn(scores, y_query) + proto_loss_lambda * proto_loss ##########################Modified for PRETRAIN
+        else:
+            loss = self.loss_fn(scores, y_query)
         # loss = self.loss_fn(scores, y_query)
 
         return loss

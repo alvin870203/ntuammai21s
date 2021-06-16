@@ -38,13 +38,14 @@ def meta_test(novel_loader, n_query = 15, task='fsl', finetune=True, n_pseudo=10
             pretrained_model = ProtoNet(model_dict[params.model], n_way = n_way, n_support = n_support)
 
         if params.method == 'mynet':
-            pretrained_model = MyNet(model_dict[params.model], n_way = n_way, n_support = n_support)
+            pretrained_model = MyNet(model_dict[params.model], n_way = n_way, n_support = n_support, use_proto_loss=False)
 
         task_path = 'single' if task in ["fsl", "cdfsl-single"] else 'multi'
         checkpoint_dir = '%s/checkpoints/%s/%s_%s' %(configs.save_dir, task_path, params.model, params.method)
         if params.train_aug:
             checkpoint_dir += '_aug'
         checkpoint_dir += '_5way_5shot'
+        # checkpoint_dir += '_0615v1_again' ##################DELETE
 
         params.save_iter = -1
         if params.save_iter != -1:

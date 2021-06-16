@@ -2,9 +2,11 @@ import torch
 import numpy as np
 from torch.autograd import Variable
 
-def adjust_learning_rate(optimizer, epoch, lr=0.01, step1=30, step2=60, step3=90):
+def adjust_learning_rate(optimizer, epoch, lr=0.01, step1=30, step2=60, step3=90,stepPeak=4):
     """Sets the learning rate to the initial LR decayed by 10 every X epochs"""
-    if epoch >= step3:
+    if epoch <= stepPeak:
+        lr = lr * 0.001
+    elif epoch >= step3:
         lr = lr * 0.001
     elif epoch >= step2:
         lr = lr * 0.01
